@@ -40,17 +40,6 @@
             box-shadow: inset .1rem .5rem 1rem rgb(8, 99, 99);
             color: coral;
         }
-        /* button #match:active{
-            padding: 1.5rem 1rem;
-            border-radius: 50%;
-            background-color: transparent;
-            border: 2px dotted #ddd;
-            font-weight: bolder;
-            box-shadow: inset .1rem .5rem 1rem rgb(8, 99, 99);
-            color: coral;
-            transform: translateY(-1rem);
-            color: blue;
-        } */
         #match:hover {
             transform: translateY(.1rem);
             opacity: .7;
@@ -206,6 +195,7 @@
         // when play is clicked
         document.querySelector("#play").onclick = () => {     
             interval();
+
             playing = true; 
             document.querySelector('#play').disabled = true;
         }
@@ -230,9 +220,6 @@
         let win = () => {
             if(currentScore === 10) {
                 document.querySelector('.win').classList.remove('hidden')
-               function winMe() {
-                    playing = false;
-               }
             }
            
         }
@@ -242,7 +229,7 @@
             document.querySelector('.win').classList.add('hidden')
                 currentScore = 0;
                 document.querySelector('#score').innerHTML = currentScore;
-
+            
                 // My problem is stopping the game after clicking the back arrow
                 // I used a function but its really not stopping
                 // I dont know why i cant seem to stop the game
