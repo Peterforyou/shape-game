@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/7c9a87d0e8.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            background-color: rgb(0, 189, 189);
+            padding-top: 2rem;
+            text-align: center;
+            line-height: 2.2rem;
+            overflow: hidden;
+        }
+        #play{
+            padding: 1rem 9rem;
+            margin-bottom: 2rem;
+            border: none;
+            border-radius: .4rem;
+            background-color: coral;
+            color: #fff;
+        }
+        #play:hover {
+            opacity: .7;
+        }
+        #match {
+            padding: 1.5rem 1rem;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 2px dotted #ddd;
+            font-weight: bolder;
+            box-shadow: inset .1rem .5rem 1rem rgb(8, 99, 99);
+            color: coral;
+        }
+        /* button #match:active{
+            padding: 1.5rem 1rem;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 2px dotted #ddd;
+            font-weight: bolder;
+            box-shadow: inset .1rem .5rem 1rem rgb(8, 99, 99);
+            color: coral;
+            transform: translateY(-1rem);
+            color: blue;
+        } */
+        #match:hover {
+            transform: translateY(.1rem);
+            opacity: .7;
+        }
+        #score {
+            font-weight: bolder;
+        }
+        .cover {
+            width: 50%;
+            margin: auto;
+            text-align: center;
+            margin-top: 4rem;
+            overflow: hidden;
+        }
+        .shape1 {
+            margin: 1rem;
+            display: inline-block;
+        }
+        .shape2 {
+            margin: 1rem;
+            display: inline-block;
+        }
+        #last {
+            text-align: center;
+            color: #fff;
+        }
+        .win {
+            background-color: #ddd;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 10;
+        }
+        .win-content {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        .win h2 {
+            font-size: 2.5rem;
+        }
+        .win p {
+            padding: 1rem 0rem;
+            font-size: 2rem;
+        }
+        .win a {
+            color: brown;
+            font-weight: bolder;
+        }
+        .back {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+        }
+        .hidden {
+            display: none;
+        }
+        @media screen and (max-width: 600px) {
+            .cover {
+                width: 100%;
+                margin: auto;
+                text-align: center;
+                margin-top: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="container">
+            <button id="play">Play</button>
+            <p>Press the <strong>match</strong> button when two shapes equal:</p>
+            <button id="match">Match</button>
+            <p>Score: <span id="score">0</span></p>
+            <div id="last">
+                <p>SCORE 10 TO GO TO NEXT LEVEL</p>
+            </div>
+        </div>
+        <div class="cover">
+            <div class="shape1"></div>
+            <div class="shape2"></div>
+        </div>
+        <div class="win hidden">
+            <div class="back">
+                <a href="#"><i class="fa-solid fa-angles-left fa-2x"></i></a>
+            </div>
+            <div class="win-content">
+                <h2>Congratulations! You Won</h2>
+                <p>Here are some $$$ for you</p>
+                <a href="#"><i class="fa-solid fa-sack-dollar fa-2x"></i></a>
+                <a href="#"><i class="fa-solid fa-sack-dollar fa-2x"></i></a>
+                <a href="#"><i class="fa-solid fa-sack-dollar fa-2x"></i></a>
+            </div>
+        </div>
+    </div>
+    <script>
+      
+        let playing = false;
+        let currentScore = 0;
+        let shape1;
+        let shape2;
+        let matchBtn = document.querySelector('#match');
+
+        // define the array of shape
+        let shapes = [
+            {color: 'red', height: 80, width: 180},
+            {color: 'red', height: 90, width: 170},
+            {color: 'blue', height: 130, width: 210},
+            {color: 'blue', height: 120, width: 240},
+            {color: 'orange', height: 160, width: 190},
+            {color: 'orange', height: 140, width: 230},
+            {color: 'green', height: 110, width: 200},
+            {color: 'green', height: 180, width: 270},
+            {color: 'yellow', height: 150, width: 250},
+            {color: 'yellow', height: 170, width: 220}
+            
+        ]
+
+        // getting a random number
+        let randomShape = () => {
+            let randomShape1 = Math.floor(Math.random()*shapes.length);
+            let randomShape2 = shapes[randomShape1]
+            return randomShape2; 
+        
+        }
+
+        //  setting the interval
+        let interval = () => {
+            setInterval(() => {
+                matchBtn.disabled = false;
+                shape1 = randomShape();
+                shape2 = randomShape();
+                console.log(shape1);
+                console.log(shape2);
+
+                let box1 = `width:${shape1.width+'px'};
+                            height:${shape1.height+'px'};
+                            background:${shape1.color};`
+
+                document.querySelector('.shape1').style.cssText = box1;
+
+                let box2 = `width:${shape2.width+'px'};
+                            height:${shape2.height+'px'};
+                            background:${shape2.color};`
+                
+                document.querySelector('.shape2').style.cssText = box2;
+            }, 1000)      
+        }
+     
+        // when play is clicked
+        document.querySelector("#play").onclick = () => {     
+            interval();
+            playing = true; 
+            document.querySelector('#play').disabled = true;
+        }
+    
+
+        //  To compare botth shapes
+        document.querySelector('#match').onclick = () => {
+            if (playing) {
+                matchBtn.disabled = true;
+                if(Object.is(shape1, shape2)) {
+                    currentScore++;
+                    document.querySelector('#score').innerHTML = currentScore;
+                }else {
+                    currentScore--;
+                    document.querySelector('#score').innerHTML = currentScore;
+                }
+            }      
+            win()
+        }
+
+        // add the win section when a user wins
+        let win = () => {
+            if(currentScore === 10) {
+                document.querySelector('.win').classList.remove('hidden')
+               function winMe() {
+                    playing = false;
+               }
+            }
+           
+        }
+
+        // close the win section when a user clicks back arrow and reset the game
+        document.querySelector('.back').onclick = () => {
+            document.querySelector('.win').classList.add('hidden')
+                currentScore = 0;
+                document.querySelector('#score').innerHTML = currentScore;
+
+                // My problem is stopping the game after clicking the back arrow
+                // I used a function but its really not stopping
+                // I dont know why i cant seem to stop the game
+                // Any suggestion please? 
+        }
+     
+      
+         
+    </script>
+</body>
+</html>
