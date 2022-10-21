@@ -118,7 +118,7 @@
             <button id="match">Match</button>
             <p>Score: <span id="score">0</span></p>
             <div id="last">
-                <p>SCORE 10 TO GO TO NEXT LEVEL</p>
+                <p>SCORE 5 TO GO TO NEXT LEVEL</p>
             </div>
         </div>
         <div class="cover">
@@ -219,7 +219,7 @@
 
         // add the win section when a user wins
         let win = () => {
-            if(currentScore === 1) {
+            if(currentScore === 5) {
                 document.querySelector('.win').classList.remove('hidden')
             }
            
@@ -230,11 +230,8 @@
             document.querySelector('.win').classList.add('hidden')
                 currentScore = 0;
                 document.querySelector('#score').innerHTML = currentScore;
-               
-                // My problem is stopping the game after clicking the back arrow
-                // I used a function but its really not stopping
-                // I dont know why i cant seem to stop the game
-                // Any suggestion please? 
+                location.reload()
+              
         }
      
       
